@@ -14,24 +14,37 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "rpool/root";
+    {
+      device = "zroot/local/root";
       fsType = "zfs";
     };
 
   fileSystems."/home" =
-    { device = "rpool/home";
+    {
+      device = "zroot/local/home";
+      fsType = "zfs";
+    };
+
+  fileSystems."/nix" =
+    {
+      device = "zroot/local/nix";
+      fsType = "zfs";
+    };
+
+  fileSystems."/persist" =
+    {
+      device = "zroot/local/persist";
       fsType = "zfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/2983-E7BD";
+    {
+      device = "/dev/disk/by-partlabel/disk-main1-ESP";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
-
-  swapDevices = [ ];
+  networking.hostId = "8425e349"; # Found with `hostid`
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  networking.hostId = "8425e349"; # Found with `hostid`
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
