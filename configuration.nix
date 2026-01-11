@@ -10,6 +10,7 @@
      ./hardware-configuration.nix
      "${builtins.fetchTarball "https://github.com/nix-community/disko/archive/master.tar.gz"}/module.nix"
      ./disk-config.nix
+     ./samba.nix
     ];
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -60,13 +61,10 @@
   # services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.alice = {
-  #   isNormalUser = true;
-  #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-  #   packages = with pkgs; [
-  #     tree
-  #   ];
-  # };
+  users.users.home = {
+    isNormalUser = true;
+    hashedPassword = "$y$j9T$oT/Qv1lS94HhK0eWbpgBy/$G.MIE0YD5x9iEEe40j.iH7UoRTPEdXXeZzsV4aOJjSD";
+  };
 
   # programs.firefox.enable = true;
 
