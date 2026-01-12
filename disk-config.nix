@@ -1,15 +1,12 @@
-# Note: disko dependency bundle sizes are large. Partition disks before nixos-install
-# sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount /tmp/disk-config.nix
-# Template based on github:nix-community/disko-templates#zfs-impermanence
-#
 # USAGE in your configuration.nix.
 # Update devices to match your hardware.
 # {
 #  imports = [ ./disko-config.nix ];
 #  disko.devices.disk.main.device = "/dev/sda";
 # }
+{ config, ...  }: 
 {
-  disko.devices = {
+  config.disko.devices = {
     disk = {
       main1 = {
         type = "disk";

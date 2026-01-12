@@ -1,17 +1,8 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
-{ config, lib, pkgs, ... }:
-
+{ config, lib, pkgs, ...}:
 {
-  imports =
-    [ # Include the results of the hardware scan.
-     ./hardware-configuration.nix
-     "${builtins.fetchTarball "https://github.com/nix-community/disko/archive/master.tar.gz"}/module.nix"
-     ./disk-config.nix
-     ./samba.nix
-    ];
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -63,6 +54,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.home = {
     isNormalUser = true;
+    extraGroups = [ "samba" ];
     hashedPassword = "$y$j9T$oT/Qv1lS94HhK0eWbpgBy/$G.MIE0YD5x9iEEe40j.iH7UoRTPEdXXeZzsV4aOJjSD";
   };
 
@@ -70,10 +62,11 @@
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
-  # environment.systemPackages = with pkgs; [
-  #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #   wget
-  # ];
+  environment.systemPackages = with pkgs; [
+    emacs-nox # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    jujutsu
+    git
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
